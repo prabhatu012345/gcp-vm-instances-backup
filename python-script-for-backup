@@ -1,0 +1,33 @@
+import googleapiclient
+import googleapiclient.discovery
+from datetime import datetime , date
+from datetime import timedelta
+import time
+
+def create_machineimage(event, context):
+  compute = googleapiclient.discovery.build('compute', 'v1')
+  project = '<project-id>' #replace with your project id
+  zone = 'us-central1-a'
+  now = datetime.now()
+  print(now)   
+  today = now.strftime("%Y%m%d")
+  y = date.today() - timedelta(days=1)
+  yesterday = y.strftime('%Y%m%d')
+
+  instances = compute.instances().list(project=project,zone=zone).execute()
+  for instance in instances['items']:
+      print(instance['name'])
+      instance_name = instance['name']
+      instance_url = 'projects/{0}/zones/{1}/instances/{2}'.format(project,zone,instance_name)
+      body = {
+      'name': instance_name+today,
+      'source_instance': instance_url
+      }
+      operation = compute.machineImages().insert(project=project,body=body).execute()
+      print(f"Machine image creation started")
+      time.sleep(5)
+      try:
+        operation = compute.machineImages().delete(project=project, machineImage=instance_name+yesterday).execute()
+        print("Older Macchine Image deleted")
+      except:
+        print("No Older machine image to delete")
