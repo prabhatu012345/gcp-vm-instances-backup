@@ -32,6 +32,10 @@ While Google Cloud does not offer a single, comprehensive managed solution for b
 
  ![image](https://github.com/prabhatu012345/gcp-vm-instances-backup/assets/44310215/5ee185a9-f610-4759-b3a6-9972bf31b786)
 
+ ### Reference Link
+
+ https://medium.com/google-cloud/schedule-machine-images-backup-and-dr-solution-for-google-compute-vm-instances-f8b605b04f95
+
  
   
 
